@@ -1,0 +1,49 @@
+/* Copyright (c) 2012-2013, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+/dts-v1/;
+
+/include/ "msm8974-v1.dtsi"
+/include/ "ursa.dtsi"
+/include/ "ursa-p1-family.dtsi"
+
+/ {
+	model = "Lab 126 Ursa v1 Pre P1";
+	compatible = "lab126,ursa", "qcom,msm8974";
+	qcom,msm-id = <126 3151 0>;
+};
+
+/* I2C overrides */
+&i2c_0 {
+	qcom,i2c-src-freq = <19200000>;
+};
+
+&i2c_2 {
+	qcom,i2c-src-freq = <19200000>;
+};
+
+&i2c_3 {
+	qcom,i2c-src-freq = <19200000>;
+};
+
+&i2c_6 {
+	qcom,i2c-src-freq = <19200000>;
+};
+
+&i2c_8 {
+	qcom,i2c-src-freq = <19200000>;
+};
+
+&i2c_12 {
+	qcom,i2c-src-freq = <19200000>;
+	status = "disabled";
+};

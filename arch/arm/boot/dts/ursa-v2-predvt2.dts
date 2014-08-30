@@ -1,0 +1,83 @@
+/* Copyright (c) 2013, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+/dts-v1/;
+
+/include/ "msm8974-v2.2.dtsi"
+/include/ "ursa.dtsi"
+/include/ "ursa-evt-family.dtsi"
+
+/ {
+	model = "Lab 126 Ursa v2 PreDVT2 (JDI)";
+	compatible = "lab126,ursa", "qcom,msm8974";
+	qcom,msm-id = <126 3157 0x20002>;
+};
+
+&i2c_2 {
+	synaptics_rmi4_i2c@20 {
+		compatible = "synaptics,rmi4_b";
+		reg = <0x20>;
+		//Note: These IRQ flags are overridden by the driver code
+		interrupt-parent = <&msmgpio>;
+		interrupts = <61 0x2>;
+		synaptics,irq-gpio = <&msmgpio 61 0x00>;
+		synaptics,disable-regulator-code = <1>;
+	};
+};
+
+&cci {
+	qcom,camera@6a {
+		qcom,cci-master=<1>;
+	};
+};
+
+/* Additions on DVT for PreDVT2 */
+
+&vph_pwr_vreg {
+	status = "ok";
+};
+
+&rpm_bus {
+
+	rpm-regulator-ldoa1 { /* ldo1 is not used for preDVT2 */
+		status = "disabled";
+
+		pm8941_l1: regulator-l1 {
+				status = "disabled";
+		};
+	};
+};
+
+&slim_msm {
+	taiko_codec {
+		cdc-vdd-a-1p2v-supply = <&vph_pwr_vreg>;
+		com,cdc-vdd-a-1p2v-voltage = <0 0>;
+		qcom,cdc-vdd-a-1p2v-current = <0>;
+
+		cdc-vddcx-1-supply = <&vph_pwr_vreg>;
+		qcom,cdc-vddcx-1-voltage = <0 0>;
+		qcom,cdc-vddcx-1-current = <0>;
+
+		cdc-vddcx-2-supply = <&vph_pwr_vreg>;
+		qcom,cdc-vddcx-2-voltage = <0 0>;
+		qcom,cdc-vddcx-2-current = <0>;
+
+		qcom,cdc-static-supplies = "cdc-vdd-buck",
+						   "cdc-vdd-tx-h",
+						   "cdc-vdd-rx-h",
+						   "cdc-vddpx-1";
+
+		qcom,cdc-on-demand-supplies = "cdc-vdd-a-1p2v",
+									  "cdc-vddcx-1",
+									  "cdc-vddcx-2";
+	};
+};

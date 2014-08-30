@@ -1,0 +1,210 @@
+/* Copyright (c) 2012-2013, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+/dts-v1/;
+
+/include/ "msm8974-v1.dtsi"
+/include/ "ursa.dtsi"
+
+/ {
+	model = "Lab 126 Ursa v1 P0";
+	compatible = "lab126,ursa", "qcom,msm8974";
+	qcom,msm-id = <126 3150 0>;
+
+	aliases {
+		serial0 = "/serial@f995e000";
+	};
+
+	serial@f991e000 {
+		status = "disabled";
+	};
+
+	serial@f995e000 {
+		status = "ok";
+	};
+
+	qcom,mdss_dsi_ursa_720p_video {
+		qcom,dsi-ctrl-phandle = <&mdss_dsi1>;
+		qcom,mdss-pan-dest = "display_2";
+		status = "ok";
+	};
+
+	sound {
+		qcom,model = "msm8974-taiko-ursa-p0-snd-card";
+		qcom,mbhc-gpio-level-insert = <1>; // Normally closed switch on P0
+	};
+
+	qcom,pronto@fb21b000 {
+		status = "disabled";
+	};
+	qcom,wcnss-wlan@fb000000 {
+		status = "disabled";
+	};
+
+	i2c@f9924000 {
+		atmel_mxt_ts@4a {
+			compatible = "atmel,mxt-ts";
+			reg = <0x4a>;
+			interrupt-parent = <&msmgpio>;
+			interrupts = <28 0x2>;
+			vdd_ana-supply = <&pm8941_l22>;
+			vcc_i2c-supply = <&pm8941_l17>;
+			atmel,reset-gpio = <&msmgpio 60 0x00>;
+			atmel,irq-gpio = <&msmgpio 28 0x00>;
+			atmel,panel-coords = <0  0 760 1424>;
+			atmel,display-coords = <0 0 720 1280>;
+			atmel,i2c-pull-up;
+			atmel,no-force-update;
+			atmel,config =
+"OBP_RAW V1
+82 19 10 AA 18 0E 16
+8419B5
+34F1A7
+0026 0000 0008 08 00 00 00 00 00 00 00
+0007 0000 0004 14 FF 0A 02
+0008 0000 000A 1F 00 05 05 00 00 0A 0A 14 19
+0009 0000 0024 8B 00 00 13 0B 00 60 32 01 05 05 0A 02 40 05 05 05 01 FF 04 CF 02 09 09 18 18 CA 33 D4 46 0A 05 00 00 01 00
+000F 0000 000B 00 00 00 01 01 00 50 78 02 00 00
+0012 0000 0002 00 00
+0013 0000 0006 00 00 00 00 00 00
+0017 0000 000F 00 00 00 04 04 00 60 32 00 02 02 64 00 64 00
+0019 0000 000F 03 00 78 69 08 52 78 69 D8 59 00 00 00 00 00
+0028 0000 0005 00 00 00 00 00
+002A 0000 000A 03 32 28 12 BE 01 05 00 00 00
+002E 0000 000A 00 00 08 14 00 00 02 00 00 01
+002F 0000 000D 00 0A 28 00 01 0A 00 00 0A 10 00 00 00
+0037 0000 0006 00 00 00 00 00 00
+0038 0000 002A 01 00 00 48 2A 2A 2A 2A 2A 29 28 28 28 29 29 28 28 28 28 24 24 21 0F 00 00 00 00 00 00 0A 00 02 0F 04 00 00 00 00 00 00 00 00
+0039 0000 0003 00 00 00
+003D 0000 0005 00 00 00 00 00
+003D 0001 0005 00 00 00 00 00
+003E 0000 0036 01 03 00 07 00 00 00 00 2D 0A 11 19 23 00 05 00 05 04 04 40 14 05 18 2D 28 08 04 0C 37 00 00 00 00 00 40 37 01 0A 02 40 05 05 05 0A 06 18 18 E5 4C D4 46 0A 05 01 "
+			;
+		};
+	};
+};
+
+/* I2C overrides */
+&i2c_0 {
+	qcom,i2c-src-freq = <19200000>;
+};
+
+&i2c_2 {
+	qcom,i2c-src-freq = <19200000>;
+};
+
+&i2c_3 {
+	qcom,i2c-src-freq = <19200000>;
+	status = "disabled";
+};
+
+&i2c_6 {
+	qcom,i2c-src-freq = <19200000>;
+};
+
+&i2c_8 {
+	qcom,i2c-src-freq = <19200000>;
+};
+
+&i2c_12 {
+	qcom,i2c-src-freq = <19200000>;
+};
+
+&sdcc2 {
+       status = "ok";
+};
+
+&sdcc3 {
+       status = "ok";
+};
+
+&rpm_bus {
+	rpm-regulator-ldoa17 {
+		pm8941_l17: regulator-l17 {
+			regulator-min-microvolt = <1800000>;
+			regulator-max-microvolt = <1800000>;
+			qcom,init-voltage = <1800000>;
+		};
+	};
+
+	rpm-regulator-ldoa18 {
+		pm8941_l18: regulator-l18 {
+			regulator-min-microvolt = <2950000>;
+			regulator-max-microvolt = <2950000>;
+			qcom,init-voltage = <2950000>;
+		};
+	};
+
+	rpm-regulator-ldoa22 {
+		pm8941_l22: regulator-l22 {
+			regulator-min-microvolt = <3000000>;
+			regulator-max-microvolt = <3000000>;
+			qcom,init-voltage = <3000000>;
+		};
+	};
+};
+
+&pm8941_gpios {
+	gpio@c200 { /* GPIO 3 FOCUS_N */
+		qcom,mode = <0>;
+		qcom,pull = <0>;
+		qcom,vin-sel = <2>;
+		qcom,src-sel = <0>;
+	};
+
+	gpio@cf00 { /* GPIO 16 DIVCLK2_DSP */
+	};
+
+	gpio@d300 { /* GPIO 20 VIB_EN */
+		qcom,mode = <1>;
+		qcom,output-type = <0>;
+		qcom,pull = <5>;
+		qcom,vin-sel = <2>;
+		qcom,out-strength = <3>;
+		qcom,src-sel = <0>;
+	};
+};
+
+&cci {
+	qcom,camera@20 {
+		gpios = <&msmgpio 17 0>,
+				<&msmgpio 49 0>;
+	};
+
+	qcom,camera@6c {
+		gpios = <&msmgpio 17 0>,
+				<&msmgpio 142 0>;
+		qcom,cam-vreg-name = "cam_vdig", "cam_vana";
+		qcom,cam-vreg-type = <1 0>;
+		qcom,cam-vreg-min-voltage = < 0 2800000>;
+		qcom,cam-vreg-max-voltage = <0 2800000>;
+		qcom,cam-vreg-op-mode = <0 85000 0>;
+	};
+	qcom,camera@6a {
+		gpios = <&msmgpio 16 0>,
+			<&msmgpio 26 0>,
+			<&msmgpio 23 0>,
+			<&msmgpio 50 0>;
+		cam_vana-supply = <&pm8941_l23>;
+		cam_vdig-supply = <&pm8941_lvs3>;
+		cam_vio-supply = <&pm8941_lvs2>;
+		qcom,cam-vreg-name = "cam_vdig", "cam_vana", "cam_vio";
+		qcom,cam-vreg-type = <1 0 1>;
+		qcom,cam-vreg-min-voltage = < 0 2800000 0>;
+		qcom,cam-vreg-max-voltage = <0 2800000 0>;
+		qcom,cam-vreg-op-mode = <0 80000 0>;
+	};
+};
+
+&pm8941_chg {
+	qcom,charging-disabled = <1>; // charging has problems on P0
+};
