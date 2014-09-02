@@ -1,0 +1,25 @@
+config TPLMS
+	bool "System measurement system"
+	default y
+
+config TPLMS_DETAIL
+	bool "Include cpu and pid/tid in trace log"
+	default n
+	depends on TPLMS
+
+config TPLMS_LED
+	bool "Support usage of debug LEDs"
+	default n
+	depends on TPLMS
+	help
+		This should only be defined for targets that have debug LEDs
+		available and have the correct tplms platform device
+		defined.
+
+config TPLMS_PERF
+	bool "Support starting/stoping perf tool from TPLMS framework"
+	default n
+	depends on TPLMS && DEBUG_FS
+	help
+		This feature should only be defined if DEBUG_FS is supported. This feature
+		also has functional dependencies on PMU support and perf tool.

@@ -1,0 +1,17 @@
+menu "FireOS"
+
+config FIREOS
+	bool "FireOS Drivers"
+	default N
+	---help---
+	  Enable support for various drivers needed on the Fire OS platform
+
+if FIREOS
+
+config FIREOS_SIGN_OF_LIFE
+	bool "FireOS Device Sign of Life information"
+	default n
+
+endif # if FIREOS
+
+endmenu
